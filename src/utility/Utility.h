@@ -15,7 +15,9 @@ using json = nlohmann::json;
 namespace Utility
 {
     float randomFloat(float lowerBound, float upperBound);
-
+    
+    std::map<std::string, std::vector<float>> readHospitalData(const char *fileName);
+    
     std::map<std::string, std::vector<float>> readMapData(const char *fileName);
 
     std::vector<json> convertMapData(std::map<std::string, std::vector<float>> mapData);

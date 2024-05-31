@@ -27,6 +27,119 @@ float Utility::randomFloat(float lowerBound, float upperBound)
     std::uniform_real_distribution<> dis(lowerBound, upperBound);
     return dis(gen);
 }
+//read hospital file
+map<std::string, std::vector<float>> Utility::readHospitalData(const char *fileName)
+{
+	map<std::string, vector<float>> map;
+	ifstream input(fileName);
+	
+	std::string delimiter = " ";
+	std::string comma = ",";
+	
+	int lineNo = 1;
+	
+	for (std::string line; getline(input, line);)
+	{
+		vector<float> v;
+		if (lineNo == 1)		//đọc số khoa của bv
+		{
+			v.push_back(stof(line));
+			map["NumofDepartment"] = v;
+		}
+		else if ((lineNo>=2) && (lineNo<=10))
+		{
+			size_t pos = 0;
+			size_t pos2 = 0;
+			std::string token; 
+			std::string token2;
+			int count = 0;
+			std::string DeName;
+			
+			//đọc tọa độ và lưu tên khoa vào DeName
+			while ((pos = line.find(delimiter)) != std::string::npos)
+			{
+				token = line.substr(0,pos);
+				if (count < 2)
+				{
+					while ((pos2 = token.find(comma)) != std::string::npos)
+					{
+					token2 = token.substr(0,pos2);
+					v.push_back(stof(token2));
+					token.erase(0,pos2 + comma.length());
+					}
+					v.push_back(stof(token));
+				}
+				
+				if (count == 2)
+				{
+					v.push_back(stof(token));
+				}
+				
+				line.erase(0,pos + delimiter.length());
+				count++;
+			}
+			DeName.assign(line);
+			map[DeName] = v;
+		}
+		else
+		{
+			size_t pos = 0;
+			size_t pos2 = 0;
+			std::string token;
+			std::string token2;
+			
+			//đọc tọa độ và lưu tên khoa vào DeName
+			while ((pos = line.find(delimiter)) != std::string::npos)
+			{
+				token = line.substr(0,pos);
+				while ((pos2 = token.find(comma)) != std::string::npos)
+				{
+					token2 = token.substr(0,pos2);
+					v.push_back(stof(token2));
+					token.erase(0,pos2 + comma.length());
+				}
+				v.push_back(stof(token));
+				line.erase(0,pos + delimiter.length());
+			}
+			
+			while ((pos = line.find(comma)) != std::string::npos)
+				{
+					token = line.substr(0,pos);
+					v.push_back(stof(token));
+					line.erase(0,pos + comma.length());
+				}
+			v.push_back(stof(line));
+			
+			if (lineNo == 11)
+			map["PosofA"] = v;
+			if (lineNo == 12)
+			map["PosofStartAGV"] = v;
+			if (lineNo == 13)
+			map["PosofEndAGV"] = v;
+			if (lineNo == 14)
+			map["PosofHos"] = v;
+			/*switch (lineNo)
+			{
+				case 11:
+					map["PosofA"] = v;
+					break;
+				case 12:
+					map["PosofStartAGV"] = v;
+					break;
+				case 13:
+					map["PosofEndAGV"] = v;
+					break;
+				case 14:
+					map["PosofHos"] = v;
+					break;
+				default:
+					break;
+			}*/
+		}
+		lineNo++;
+	}
+	return map;
+}
 
 // read map data file
 std::map<std::string, std::vector<float>> Utility::readMapData(
