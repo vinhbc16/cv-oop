@@ -1,6 +1,6 @@
 #ifndef NEUROTIC_H
 #define NEUROTIC_H
-#include "Personality.h"
+#include "C:/OOP/hoangnv-sfm/src/Personality/Personality.h"
 
 class Neurotic : public Personality {
 public:

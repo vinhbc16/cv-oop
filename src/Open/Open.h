@@ -1,6 +1,6 @@
 #ifndef OPEN_H
 #define OPEN_H
-#include "Personality.h"
+#include "C:/OOP/hoangnv-sfm/src/Personality/Personality.h"
 
 class Open : public Personality {
 public:

@@ -1,4 +1,4 @@
-#include "Personality.h"
+#include "C:/OOP/hoangnv-sfm/src/Personality/Personality.h"
 #include <iostream>
 using namespace std;
 
@@ -8,5 +8,5 @@ Personality::Personality( double lambda1 , double pe_Threshold , double ne_Thres
 // Định nghĩa phương thức print
 void Personality::print() {
     cout << "lamda : " << lambda << endl ;
-    cout << "indexemotion : " << positiveEmotionThreshold << " " << negativeEmotionThreshold ;
+    cout << "indexemotion : " << positiveEmotionThreshold << " " << negativeEmotionThreshold << endl ;
 }
